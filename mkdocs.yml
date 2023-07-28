@@ -1,0 +1,13 @@
+site_name: Busca doggo
+repo_url: https://github.com/luis705/busca-doggo
+repo_name: luis705/busca-doggo
+edit_uri: tree/main/docs/
+
+theme:
+  name: material
+
+plugins:
+- mkdocstrings:
+    handlers:
+      python:
+        paths: [src/classificador]
