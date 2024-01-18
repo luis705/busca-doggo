@@ -58,7 +58,7 @@ Passo 2 - rotinas para execução de treino - teste:
 Passo 3 - definição do melhor modelo - transfer learning:
   Treino e avaliação de diversas modelo
   Seleção do campeão
-](assets/img/Planejamento.png)
+](docs/assets/img/Planejamento.png)
 
 Após a definição do modelo a ser utilizado, o planejamento para a finalização do projeto - construção da API em si -
 será criado.
