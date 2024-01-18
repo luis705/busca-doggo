@@ -42,3 +42,23 @@ biblioteca foi necessário fornecer no [`pyproject.toml`](https://github.com/lui
 Esses wheels só funcionarão caso exista uma GPU com possibilidade de utilizar CUDA e a versão 11.7 do CUDA estejam
 instaladas na máquina, caso contrário, recomendo renomear o arquivo [`pyproject-cpu.toml`](https://github.com/luis705/tree/main/pyproject-cpu.toml)
 para `pyproject.toml` antes de executar `poetry install`.
+
+## Planejamento
+O desenvolvimento dos modelos se dará de acordo com o planejamento na imagem a seguir.
+
+![Planejamento da construção dos modelos. 
+Passo 1 - rotinas para construção de dataset:
+  Rotina para extração dos dados;
+  Classe de dataset pytorch;
+  Classe de dataloader pytorch
+Passo 2 - rotinas para execução de treino - teste:
+  Criação do loop de treino;
+  Definição de métricas;
+  Definição de baseline - AutoML
+Passo 3 - definição do melhor modelo - transfer learning:
+  Treino e avaliação de diversas modelo
+  Seleção do campeão
+](docs/assets/img/Planejamento.png)
+
+Após a definição do modelo a ser utilizado, o planejamento para a finalização do projeto - construção da API em si -
+será criado.
