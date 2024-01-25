@@ -52,6 +52,6 @@ line_length = 79
 [tool.taskipy.tasks]
 lint = "blue --check --diff . && isort --check --diff ."
 pre_test = "task lint"
-test = "pytest -s -x --cov=busca_doggo -vv --pdb"
+test = "pytest -s -x --cov=busca_doggo -vv"
 post_test = "coverage html"
 docs = "mkdocs serve"

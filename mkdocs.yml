@@ -12,4 +12,4 @@ plugins:
       python:
         paths: [busca_doggo]
         options:
-          show_source: false
+          show_source: true
