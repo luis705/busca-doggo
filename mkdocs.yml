@@ -10,4 +10,6 @@ plugins:
 - mkdocstrings:
     handlers:
       python:
-        paths: [src/classificador]
+        paths: [busca_doggo]
+        options:
+          show_source: false

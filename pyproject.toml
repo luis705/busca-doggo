@@ -15,6 +15,8 @@ scipy = "^1.11.4"
 matplotlib = "^3.8.2"
 numpy = "^1.26.3"
 torchsummary = "^1.5.1"
+python-dotenv = "^1.0.0"
+kaggle = "^1.6.3"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -42,7 +44,6 @@ priority = "primary"
 
 [tool.pytest.ini_options]
 pythonpath = "."
-addopts  = "--doctest-modules"
 
 [tool.isort]
 profile = "black"
@@ -51,6 +52,6 @@ line_length = 79
 [tool.taskipy.tasks]
 lint = "blue --check --diff . && isort --check --diff ."
 pre_test = "task lint"
-test = "pytest -s -x --cov=src -vv "
+test = "pytest -s -x --cov=busca_doggo -vv --pdb"
 post_test = "coverage html"
 docs = "mkdocs serve"
