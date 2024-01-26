@@ -1,0 +1,8 @@
+{
+  "project_name": "busca_doggo",
+  "version": 0,
+  "logger":
+  {
+    "config": "log_config.json"
+  }
+}
