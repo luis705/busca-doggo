@@ -4,5 +4,10 @@
   "logger":
   {
     "config": "log_config.json"
+  },
+  "data":
+  {
+    "path": "data/Images",
+    "download": "data"
   }
 }
