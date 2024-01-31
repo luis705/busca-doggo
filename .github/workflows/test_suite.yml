@@ -37,7 +37,7 @@ jobs:
         python-version: "3.10"
         
     - name: Install dependencies
-      run: poetry shell && poetry lock --no-update && poetry install --with dev
+      run: poetry lock --no-update && poetry install --with dev
       
     - name: Test and lint
       run: poetry run task test
