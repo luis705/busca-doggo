@@ -19,6 +19,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Setup pyproject.toml
+      run: mv pyproject-cpu.toml pyproject.toml
     
     - name: Install and configure Poetry
       uses: snok/install-poetry@v1
