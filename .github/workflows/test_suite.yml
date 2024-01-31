@@ -20,8 +20,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Poetry Install
-      uses: knowsuchagency/poetry-install@v2
+    - name: Install and configure Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.5.1
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+        installer-parallel: true
       
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
