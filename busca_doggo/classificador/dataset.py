@@ -90,7 +90,9 @@ class DogBreedDataset(Dataset):
             force=force,
         )
 
-    def _unzip_dataset(self, verbose: bool = False, force: bool = False) -> None:
+    def _unzip_dataset(
+        self, verbose: bool = False, force: bool = False
+    ) -> None:
         """
         Descompacta dataset baixado salvando assim as imagens prontas para serem processadas.
 
