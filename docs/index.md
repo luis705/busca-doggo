@@ -8,6 +8,29 @@ API para detecção de raça de cachorros em imagens. O projeto é separado em t
 - [docs](https://github.com/luis705/tree/main/docs) que contém os arquivos de documentação e
 - [tests](https://github.com/luis705/tree/main/test) contendo os arquivos de testes.
 
+## Instruções
+
+### Pytorch
+A instalação do pytorch utilizando o poetry é um pouquinho complicada. Para simplificar o problema adicionei no
+`pyproject.toml` os caminhos de onde instalar a biblioteca. Assim há duas forma de instalação correta.
+
+#### PyTorch com CUDA
+Para instalar a versão CUDA do pytorch basta corrigir nas dependências a versão do framework CUDA instalado. A forma mais
+simples de fazer isso é seguindo o passo a passo abaixo:
+- Desinstalar todas as versões do framework CUDA;
+- Verificar no [site do pytorch](https://pytorch.org/get-started/locally/) qual a versão CUDA mais
+recente suportada e instalá-la;
+- Remover do `pyproject.toml` as dependências `torch` e `torchvision` com `poetry remove torch torchvision`
+- Reinstalar as dependências com `poetry add --source pytorch-gpu torch torchvision`
+
+#### PyTorch para CPU
+Este caso é mais simples, porém obviamente a rede neural demorará mais tempo para ser executada por completo. Para
+instalar o pacote para CPU basta executar:
+```
+$ `poetry remove torch torchvision`
+$ poetry add --source pytorch-cpu torch torchvision
+```
+
 ## Objetivos
 Este projeto foi iniciado com 3 objetivos principais em mente:
 
