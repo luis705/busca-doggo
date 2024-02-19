@@ -25,7 +25,7 @@
       "maxBytes": 10240.0,
       "encoding": "utf8",
       "mode": "a",
-      "filename": "../../logs/log.log"
+      "filename": "logs/log.log"
     }
   },
   "loggers":

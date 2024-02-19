@@ -35,7 +35,7 @@ class DogBreedDataset(Dataset):
         logger: Logger,
         transform: Union[callable, None] = None,
         path: Optional[Path] = Path('dados', 'Imagens'),
-        download_path: Optional[Path] = Path('dados')
+        download_path: Optional[Path] = Path('dados'),
     ) -> None:
         self.logger = logger
         self.path = Path(path)
@@ -59,21 +59,22 @@ class DogBreedDataset(Dataset):
         return api
 
     def _download_dataset(
-            self,
-            quiet: bool = False,
-            force: bool = False
+        self, verbose: bool = False, force: bool = False
     ) -> None:
         """
         Baixa o conjunto de dados do kaggle.
 
         Args:
-            quiet (bool) : Verbosidade do processo
+            verbose (bool) : Verbosidade do processo
             force (bool) : Se `True` realiza o download mesmo se o arquivo já existe
         """
         if self.download_path.exists() and not force:
             return
 
-        shutil.rmtree(self.download_path / 'stanford-dogs-dataset.zip', ignore_errors=True)
+        shutil.rmtree(
+            self.download_path / 'stanford-dogs-dataset.zip',
+            ignore_errors=True,
+        )
         self.logger.info(
             f'Iniciando download do dataset jessicali9530/stanford-dogs-dataset para {self.download_path.resolve()}'
         )
@@ -85,15 +86,11 @@ class DogBreedDataset(Dataset):
             'jessicali9530/stanford-dogs-dataset',
             path=self.download_path,
             unzip=False,
-            quiet=quiet,
+            quiet=not verbose,
             force=force,
         )
 
-    def _unzip_dataset(
-            self,
-            quiet: bool = False,
-            force: bool = False
-    ) -> None:
+    def _unzip_dataset(self, verbose: bool = False, force: bool = False) -> None:
         """
         Descompacta dataset baixado salvando assim as imagens prontas para serem processadas.
 
@@ -101,7 +98,7 @@ class DogBreedDataset(Dataset):
         as imagens está, ou seja, `self.path = self.path / 'Imagens'`, desta forma chama
 
         Args:
-            quiet (bool) : Verbosidade do processo
+            verbose (bool) : Verbosidade do processo
             force (bool) : Se `True` realiza o download mesmo se o arquivo já existe
 
         Returns:
@@ -112,18 +109,18 @@ class DogBreedDataset(Dataset):
             return
 
         shutil.rmtree(self.path, ignore_errors=True)
-        logger.info(
-            f'Descompactando conjunto de dados para {self.path}'
-        )
+        self.logger.info(f'Descompactando conjunto de dados para {self.path}')
 
-        with ZipFile(self.download_path / 'stanford-dogs-dataset.zip') as compactado:
+        with ZipFile(
+            self.download_path / 'stanford-dogs-dataset.zip'
+        ) as compactado:
             tamanho_bytes = sum([t.compress_size for t in compactado.filelist])
             with tqdm(
-                    total=tamanho_bytes,
-                    unit='B',
-                    unit_scale=True,
-                    unit_divisor=1024,
-                    disable=quiet
+                total=tamanho_bytes,
+                unit='B',
+                unit_scale=True,
+                unit_divisor=1024,
+                disable=not verbose,
             ) as pbar:
                 for arquivo in compactado.namelist():
                     pbar.update(compactado.getinfo(arquivo).compress_size)
@@ -133,11 +130,7 @@ class DogBreedDataset(Dataset):
         shutil.copytree(self.download_path / 'images' / 'Images', self.path)
         shutil.rmtree(self.download_path / 'images')
 
-    def generate_dataset(
-            self,
-            quiet: bool = False,
-            force: bool = False
-    ):
+    def generate_dataset(self, verbose: bool = False, force: bool = False):
         """
         Gera o dataset ao baixá-lo do Kaggle e descompactá-lo.
 
@@ -145,22 +138,15 @@ class DogBreedDataset(Dataset):
         raças de cachorro.
 
         Args:
-            quiet (bool): Verbosidade do processo
+            verbose (bool): Verbosidade do processo
             force (bool): Se `True` realiza o download mesmo se o arquivo já existe
 
         """
         if force:
             self.logger.info(
-            f'Flag `force` com valor `True`. Caso dados estejam disponíveis em {self.path.resolve()} eles serão sobrescritos'
+                f'Flag `force` com valor `True`. Caso dados estejam disponíveis em {self.path.resolve()} eles serão sobrescritos'
             )
         self.kaggle_api = self._authenticate_on_kaggle()
-        self._download_dataset(quiet=quiet, force=force)
-        self._unzip_dataset(quiet=quiet, force=force)
+        self._download_dataset(verbose=verbose, force=force)
+        self._unzip_dataset(verbose=verbose, force=force)
         self.logger.info(f'Dataset disponível em: {self.path.resolve()}')
-
-
-if __name__ == '__main__':
-    log.setup_logs_folder(Path('../../logs'))
-    logger = log.setup_logger(Path('../../log_config.json'))
-    dog = DogBreedDataset(logger)
-    dog.generate_dataset(True, True)

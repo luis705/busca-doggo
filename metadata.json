@@ -3,11 +3,12 @@
   "version": 0,
   "logger":
   {
-    "config": "log_config.json"
+    "config": "log_config.json",
+    "folder": "logs"
   },
   "data":
   {
-    "path": "data/Images",
-    "download": "data"
+    "image_path": "data/dataset",
+    "download_path": "data"
   }
 }
