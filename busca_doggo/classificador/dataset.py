@@ -1,11 +1,11 @@
 import shutil
 from logging import Logger
 from pathlib import Path
-from time import sleep
 from typing import Optional, Union
 from zipfile import ZipFile
 
 from torch.utils.data import Dataset
+from torchvision.io import read_image
 from tqdm import tqdm
 
 
@@ -26,8 +26,12 @@ class DogBreedDataset(Dataset):
     Attributes:
         logger (Logger): Objeto para salvar logs
         transform (Union[transform, None]): Transformação aplicada nos dados, ver [torchvision.transforms](https://pytorch.org/vision/0.9/transforms.html)
+        target_transform (Union[transform, None]): Transformação aplicada nos labels, ver [torchvision.transforms](https://pytorch.org/vision/0.9/transforms.html)
         path (Path): Caminho onde as imagens estão
+        download_path (Path): Caminho onde as imagens serão baixadas
         kaggle_api (Union[KaggleApi, None]): Objeto de API do Kaggle para baixar o dataset. Valor padrão é None, caso `generate_dataset` seja chamado se torna um objeto KaggleApi
+        imagens (list[Path]): Lista contendo o caminho de cada imagem, necessário para manter sempre a mesma ordem
+        labels (list[str]): Lista contendo o label de cada imagem
     """
 
     def __init__(
@@ -57,6 +61,26 @@ class DogBreedDataset(Dataset):
                 'O caminho com os dados não existe. Ocorreu algum erro na hora de baixá-los.'
             )
 
+        # Carregando dataset em memória
+        self.imagens = list(self.path.iterdir())
+        self.labels = [
+            "_".join(img.stem.split('_')[:-1]).lower()
+            for img in self.imagens
+        ]
+
+    def __len__(self):
+        return len(self.labels)
+
+    def __getitem__(self, idx):
+        img = read_image(self.imagens[idx])
+        label = self.labels[idx]
+
+        if self.transform:
+            img = self.transform(img)
+        if self.target_transform:
+            label = self.target_transform(label)
+
+        return img, label
     @staticmethod
     def _authenticate_on_kaggle():
         """
@@ -109,9 +133,6 @@ class DogBreedDataset(Dataset):
     ) -> None:
         """
         Descompacta dataset baixado salvando assim as imagens prontas para serem processadas.
-
-        Atenção: o atributo self.path é sobrescrito para apontar para o diretório que os subdiretórios contendo
-        as imagens está, ou seja, `self.path = self.path / 'Imagens'`, desta forma chama
 
         Args:
             verbose (bool) : Verbosidade do processo
@@ -192,9 +213,6 @@ class DogBreedDataset(Dataset):
     def generate_dataset(self, verbose: bool = False, force: bool = False):
         """
         Gera o dataset ao baixá-lo do Kaggle e descompactá-lo.
-
-        Atenção: a propriedade `self.path` é modificada para apontar para o diretório contendo os subdiretórios das
-        raças de cachorro.
 
         Args:
             verbose (bool): Verbosidade do processo
