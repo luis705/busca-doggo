@@ -10,6 +10,12 @@ API para detecção de raça de cachorros em imagens. O projeto é separado em t
 
 ## Instruções
 
+### Kaggle
+Para baixar de forma dinâmica o conjunto de dados utilizado é necessário acessar a API do kaggle. Para isso é necessário
+criar um token de acesso seguindo [essas instruções](https://www.kaggle.com/docs/api#authentication). Após gerar o token
+deve ser criado na raiz do projeto um arquivo chamado `.env` baseado no arquivo `.env.template` porem substituindo os
+dados com as credenciais geradas.
+
 ### Pytorch
 A instalação do pytorch utilizando o poetry é um pouquinho complicada. Para simplificar o problema adicionei no
 `pyproject.toml` os caminhos de onde instalar a biblioteca. Assim há duas forma de instalação correta.
