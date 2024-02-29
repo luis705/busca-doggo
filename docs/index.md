@@ -2,13 +2,20 @@
 
 API para detecção de raça de cachorros em imagens. O projeto é separado em três pastas:
 
-- [src](https://github.com/luis705/tree/main/src) que contém os arquivos de código do projeto dividida em
-    - [src/classificador](https://github.com/luis705/tree/main/src/classificador) contendo o código da rede neural classificadora
-    - [src/busca_doggo](https://github.com/luis705/tree/main/src/busca_doggo) contendo o código da API em si
-- [docs](https://github.com/luis705/tree/main/docs) que contém os arquivos de documentação e
-- [tests](https://github.com/luis705/tree/main/test) contendo os arquivos de testes.
+- [busca_doggo](https://github.com/luis705/busca-doggo/tree/main/busca_doggo) que contém os arquivos de código do projeto dividida em
+    - [busca_doggo/classificador](https://github.com/luis705/busca-doggo/tree/main/busca_doggo/classificador) contendo o código da rede neural classificadora
+    - [busca_doggo/utils](https://github.com/luis705/busca-doggo/tree/main/busca_doggo/classificador/utils) contendo modulos e funções uteis para o projeto
+- [docs](https://github.com/luis705/busca-doggo/tree/main/docs) que contém os arquivos de documentação e
+- [tests](https://github.com/luis705/busca-doggo/tree/main/tests) contendo os arquivos de testes.
 
 ## Instruções
+
+### Kaggle
+Para baixar de forma dinâmica o conjunto de dados utilizado é necessário acessar a API do kaggle. Para isso é necessário
+criar um token de acesso seguindo [essas instruções](https://www.kaggle.com/docs/api#authentication). Após gerar o token
+deve ser criado na raiz do projeto um arquivo chamado `.env` baseado no arquivo
+[`.env.template`](https://github.com/luis705/busca-doggo/tree/main/busca_doggo/.env.template) porem substituindo os
+dados com as credenciais geradas.
 
 ### Pytorch
 A instalação do pytorch utilizando o poetry é um pouquinho complicada. Para simplificar o problema adicionei no
