@@ -64,8 +64,7 @@ class DogBreedDataset(Dataset):
         # Carregando dataset em memória
         self.imagens = list(self.path.iterdir())
         self.labels = [
-            "_".join(img.stem.split('_')[:-1]).lower()
-            for img in self.imagens
+            '_'.join(img.stem.split('_')[:-1]).lower() for img in self.imagens
         ]
 
     def __len__(self):
@@ -81,6 +80,7 @@ class DogBreedDataset(Dataset):
             label = self.target_transform(label)
 
         return img, label
+
     @staticmethod
     def _authenticate_on_kaggle():
         """
@@ -173,9 +173,7 @@ class DogBreedDataset(Dataset):
         shutil.copytree(self.download_path / 'images' / 'Images', self.path)
         shutil.rmtree(self.download_path / 'images')
 
-    def _corrige_imagens(
-            self, verbose: bool = False
-    ) -> None:
+    def _corrige_imagens(self, verbose: bool = False) -> None:
         subdirs = [sub for sub in self.path.iterdir() if sub.is_dir()]
 
         if len(subdirs) == 0:
