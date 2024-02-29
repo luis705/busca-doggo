@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import click
 
 from busca_doggo.classificador import DogBreedDataset
@@ -27,13 +25,14 @@ def get_dataset(ctx, force, verbose):
     metadata = ctx.obj['METADATA']
     logger = ctx.obj['LOGGER']
 
-    dataset = DogBreedDataset(
+    DogBreedDataset(
         logger=logger,
         transform=None,
         path=metadata.data('image_path'),
         download_path=metadata.data('download_path'),
+        force_download=force,
+        verbose=verbose,
     )
-    dataset.generate_dataset(verbose=verbose, force=force)
 
 
 def entry_point():

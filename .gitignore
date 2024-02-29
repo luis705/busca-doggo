@@ -150,6 +150,8 @@ cython_debug/
 
 # Arquivos de dados
 **/dados
+**/data
 
 # Mdbooks
 /docs/book
+
