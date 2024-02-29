@@ -2,11 +2,40 @@
 
 API para detecção de raça de cachorros em imagens. O projeto é separado em três pastas:
 
-- [src](https://github.com/luis705/tree/main/src) que contém os arquivos de código do projeto dividida em
-    - [src/classificador](https://github.com/luis705/tree/main/src/classificador) contendo o código da rede neural classificadora
-    - [src/busca_doggo](https://github.com/luis705/tree/main/src/busca_doggo) contendo o código da API em si
-- [docs](https://github.com/luis705/tree/main/docs) que contém os arquivos de documentação e
-- [tests](https://github.com/luis705/tree/main/test) contendo os arquivos de testes.
+- [busca_doggo](https://github.com/luis705/busca-doggo/tree/main/busca_doggo) que contém os arquivos de código do projeto dividida em
+    - [busca_doggo/classificador](https://github.com/luis705/busca-doggo/tree/main/busca_doggo/classificador) contendo o código da rede neural classificadora
+    - [busca_doggo/utils](https://github.com/luis705/busca-doggo/tree/main/busca_doggo/classificador/utils) contendo modulos e funções uteis para o projeto
+- [docs](https://github.com/luis705/busca-doggo/tree/main/docs) que contém os arquivos de documentação e
+- [tests](https://github.com/luis705/busca-doggo/tree/main/tests) contendo os arquivos de testes.
+
+## Instruções
+
+### Kaggle
+Para baixar de forma dinâmica o conjunto de dados utilizado é necessário acessar a API do kaggle. Para isso é necessário
+criar um token de acesso seguindo [essas instruções](https://www.kaggle.com/docs/api#authentication). Após gerar o token
+deve ser criado na raiz do projeto um arquivo chamado `.env` baseado no arquivo [`.env.template`](.env.template) porem substituindo os
+dados com as credenciais geradas.
+
+### Pytorch
+A instalação do pytorch utilizando o poetry é um pouquinho complicada. Para simplificar o problema adicionei no
+`pyproject.toml` os caminhos de onde instalar a biblioteca. Assim há duas forma de instalação correta.
+
+#### PyTorch com CUDA
+Para instalar a versão CUDA do pytorch basta corrigir nas dependências a versão do framework CUDA instalado. A forma mais
+simples de fazer isso é seguindo o passo a passo abaixo:
+- Desinstalar todas as versões do framework CUDA;
+- Verificar no [site do pytorch](https://pytorch.org/get-started/locally/) qual a versão CUDA mais
+recente suportada e instalá-la;
+- Remover do `pyproject.toml` as dependências `torch` e `torchvision` com `poetry remove torch torchvision`
+- Reinstalar as dependências com `poetry add --source pytorch-gpu torch torchvision`
+
+#### PyTorch para CPU
+Este caso é mais simples, porém obviamente a rede neural demorará mais tempo para ser executada por completo. Para
+instalar o pacote para CPU basta executar:
+```
+$ `poetry remove torch torchvision`
+$ poetry add --source pytorch-cpu torch torchvision
+```
 
 ## Objetivos
 Este projeto foi iniciado com 3 objetivos principais em mente:
@@ -58,7 +87,7 @@ Passo 2 - rotinas para execução de treino - teste:
 Passo 3 - definição do melhor modelo - transfer learning:
   Treino e avaliação de diversas modelo
   Seleção do campeão
-](docs/assets/img/Planejamento.png)
+](assets/img/Planejamento.png)
 
 Após a definição do modelo a ser utilizado, o planejamento para a finalização do projeto - construção da API em si -
 será criado.
